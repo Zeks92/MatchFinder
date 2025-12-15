@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import { Step2SportSelect } from "./steps/Step2SportSelect";
+import { Step3RefineSearch } from "./steps/Step3RefineSearch";
 
 const steps = [
   "Welcome Aboard",
@@ -58,9 +59,6 @@ const Step1Welcome = ({ onNext }: { onNext: () => void }) => {
   );
 };
 
-const Step3RefineSearch = () => (
-  <Box sx={{ p: 3 }}>Step 3 Content Placeholder</Box>
-);
 const Step4Results = () => <Box sx={{ p: 3 }}>Step 4 Content Placeholder</Box>;
 
 export default function MatchFinderStepper() {
@@ -99,7 +97,13 @@ export default function MatchFinderStepper() {
           />
         );
       case 2:
-        return <Step3RefineSearch />;
+        return (
+          <Step3RefineSearch
+            onValidate={handleValidationChange}
+            onNext={handleNext}
+            onBack={handleBack}
+          />
+        );
       case 3:
         return <Step4Results />;
       default:
@@ -136,30 +140,27 @@ export default function MatchFinderStepper() {
         <Paper elevation={3} sx={{ p: { xs: 2, md: 5 }, minHeight: 400 }}>
           {getStepContent(activeStep, handleNext)}
 
-          {activeStep > 0 && activeStep > 2 && (
+          {activeStep === 0 && null}
+
+          {activeStep === steps.length - 1 && (
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
                 pt: 2,
-                justifyContent: "space-between",
+                justifyContent: "flex-end",
               }}
             >
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
+              <Button onClick={handleBack} disabled={activeStep === 0}>
                 Back
               </Button>
               <Button
                 onClick={handleNext}
                 variant="contained"
                 color="primary"
-                disabled={!isStepValid}
+                sx={{ ml: 1 }}
               >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                Finish
               </Button>
             </Box>
           )}

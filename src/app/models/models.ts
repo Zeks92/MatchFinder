@@ -2,18 +2,23 @@ export interface Step2SportSelectProps {
     onValidate: (isValid: boolean) => void;
     onNext: () => void;
 }
+
+export interface Step3RefineSearchProps {
+    onValidate: (isValid: boolean) => void;
+    onNext: () => void;
+    onBack: () => void;
+}
 export interface SportOption {
   id: string;
   name: string;
   endpoint: string;
 }
-
 export interface MatchFinderState {
   selectedSports: SportOption[];
   selectedCategories: string[];
   selectedCompetitions: string[];
+  availableFilters: AvailableFilters;
 }
-
 export interface MatchFinderContextProps {
   state: MatchFinderState;
   dispatch: React.Dispatch<MatchFinderAction>;
@@ -25,4 +30,10 @@ export type MatchFinderAction =
   | { type: 'SET_SELECTED_SPORTS'; payload: SportOption[] }
   | { type: 'SET_SELECTED_CATEGORIES'; payload: string[] }
   | { type: 'SET_SELECTED_COMPETITIONS'; payload: string[] }
+  | { type: 'SET_AVAILABLE_FILTERS'; payload: AvailableFilters }
   | { type: 'SET_LOADING'; payload: boolean };
+
+  export interface AvailableFilters {
+  categories: string[];
+  competitions: string[];
+}

@@ -1,7 +1,8 @@
 'use client';
 
 import React, { createContext, useReducer, useContext, useState } from 'react';
-import { SportOption, MatchFinderState, MatchFinderAction, MatchFinderContextProps } from '../models/models';
+import { SportOption, MatchFinderState, MatchFinderAction, MatchFinderContextProps, AvailableFilters } from '../models/models';
+import axios from 'axios';
 
 const initialSportOptions: SportOption[] = [
   { id: '1', name: 'Football', endpoint: 'soccer' },
@@ -14,6 +15,10 @@ const initialState: MatchFinderState = {
   selectedSports: [],
   selectedCategories: [],
   selectedCompetitions: [],
+  availableFilters: {
+    categories: [],
+    competitions: [],
+  }
 };
 
 const matchFinderReducer = (state: MatchFinderState, action: MatchFinderAction): MatchFinderState => {
@@ -24,6 +29,8 @@ const matchFinderReducer = (state: MatchFinderState, action: MatchFinderAction):
       return { ...state, selectedCategories: action.payload };
     case 'SET_SELECTED_COMPETITIONS':
       return { ...state, selectedCompetitions: action.payload };
+    case 'SET_AVAILABLE_FILTERS':
+      return { ...state, availableFilters: action.payload };
     default:
       return state;
   }
@@ -34,12 +41,31 @@ const MatchFinderContext = createContext<MatchFinderContextProps | undefined>(un
 export const MatchFinderProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(matchFinderReducer, initialState);
   const [isLoading, setIsLoading] = useState(false);
+
   const fetchSportData = async (sports: SportOption[]) => {
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1500)); 
-    setIsLoading(false);
-  };
+    
+    try {
+      const response = await axios.post('/api/schedule', { sports });
+      
+      const { schedules, errors, availableFilters } = response.data;
+      
+      if (errors && errors.length > 0) {
+        console.warn('Errors during fetching:', errors);
+      }
+      
+      if (schedules && schedules.length > 0) {
+        dispatch({ type: 'SET_AVAILABLE_FILTERS', payload: availableFilters as AvailableFilters });
+      } else {
+        dispatch({ type: 'SET_AVAILABLE_FILTERS', payload: { categories: [], competitions: [] } });
+      }
 
+    } catch (error) {
+      console.error('API call failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <MatchFinderContext.Provider value={{ state, dispatch, fetchSportData, isLoading }}>
       {children}
