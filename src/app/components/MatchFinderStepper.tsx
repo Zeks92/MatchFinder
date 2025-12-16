@@ -12,12 +12,14 @@ import { Step1Welcome } from "./steps/Step1Welcome";
 import { Step2SportSelect } from "./steps/Step2SportSelect";
 import { Step3RefineSearch } from "./steps/Step3RefineSearch";
 import { steps } from "../utils/data/constants";
+import { useMatchFinder } from "../context/MatchFinderContext";
+import { Step4Results } from "./steps/Step4Results";
 
-const Step4Results = () => <Box sx={{ p: 3 }}>Step 4 Content Placeholder</Box>;
 
 export default function MatchFinderStepper() {
   const [activeStep, setActiveStep] = useState(0);
   const [isStepValid, setIsStepValid] = useState(false);
+  const { dispatch } = useMatchFinder();
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setIsStepValid(false);
@@ -37,6 +39,12 @@ export default function MatchFinderStepper() {
 
   const handleReset = () => {
     setActiveStep(0);
+    setIsStepValid(false);
+    dispatch({ type: 'SET_SELECTED_SPORTS', payload: [] });
+    dispatch({ type: 'SET_SELECTED_CATEGORIES', payload: [] });
+    dispatch({ type: 'SET_SELECTED_COMPETITIONS', payload: [] });
+    dispatch({ type: 'SET_AVAILABLE_FILTERS', payload: { categories: [], competitions: [] } });
+    dispatch({ type: 'SET_ALL_SCHEDULED_EVENTS', payload: [] });
   };
 
   const getStepContent = (step: number, handleNext: () => void) => {
@@ -59,7 +67,7 @@ export default function MatchFinderStepper() {
           />
         );
       case 3:
-        return <Step4Results />;
+        return <Step4Results onBack={handleBack} onReset={handleReset} />;
       default:
         return <div>Unknown step</div>;
     }

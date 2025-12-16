@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Typography, Divider, Button } from "@mui/material";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 

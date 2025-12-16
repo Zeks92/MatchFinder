@@ -16,7 +16,8 @@ export const initialState: MatchFinderState = {
   availableFilters: {
     categories: [],
     competitions: [],
-  }
+  },
+  allScheduledEvents: [],
 };
 export const steps = [
   "Welcome Aboard",

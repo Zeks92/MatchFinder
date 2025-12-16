@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import NextAppDirEmotionCacheProvider from './utils/helpers/EmotionCache';
 
 const theme = createTheme({
   palette: {
@@ -21,9 +22,13 @@ const theme = createTheme({
 
 export default function ThemeRegistry({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline enableColorScheme />
-      {children}
-    </ThemeProvider>
+    <NextAppDirEmotionCacheProvider options={{ key: 'mui' }}>
+      {/* MUI-jev ThemeProvider */}
+      <ThemeProvider theme={theme}>
+        {/* Resetovanje CSS-a */}
+        <CssBaseline /> 
+        {children}
+      </ThemeProvider>
+    </NextAppDirEmotionCacheProvider>
   );
 }

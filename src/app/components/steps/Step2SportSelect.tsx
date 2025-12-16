@@ -56,17 +56,23 @@ export const Step2SportSelect: React.FC<Step2SportSelectProps> = ({
         getOptionLabel={(option) => option.name}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         onChange={handleChange}
-        renderOption={(props, option, { selected }) => (
-          <li {...props} key={option.id}>
-            <Checkbox
-              icon={icon}
-              checkedIcon={checkedIcon}
-              style={{ marginRight: 8 }}
-              checked={selected}
-            />
-            {option.name}
-          </li>
-        )}
+        renderOption={(props, option, { selected }) => {
+          const { key, ...restProps } = props as {
+            key?: React.Key;
+          } & typeof props;
+
+          return (
+            <li key={option.id} {...restProps}>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {option.name}
+            </li>
+          );
+        }}
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => (
             <Chip
