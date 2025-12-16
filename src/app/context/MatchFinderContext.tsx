@@ -3,23 +3,7 @@
 import React, { createContext, useReducer, useContext, useState } from 'react';
 import { SportOption, MatchFinderState, MatchFinderAction, MatchFinderContextProps, AvailableFilters } from '../models/models';
 import axios from 'axios';
-
-const initialSportOptions: SportOption[] = [
-  { id: '1', name: 'Football', endpoint: 'soccer' },
-  { id: '2', name: 'Basketball', endpoint: 'basketball' },
-  { id: '3', name: 'Tennis', endpoint: 'tennis' }, 
-  { id: '4', name: 'Ice Hockey', endpoint: 'icehockey' },
-];
-
-const initialState: MatchFinderState = {
-  selectedSports: [],
-  selectedCategories: [],
-  selectedCompetitions: [],
-  availableFilters: {
-    categories: [],
-    competitions: [],
-  }
-};
+import { initialState, initialSportOptions } from '../utils/data/constants';
 
 const matchFinderReducer = (state: MatchFinderState, action: MatchFinderAction): MatchFinderState => {
   switch (action.type) {

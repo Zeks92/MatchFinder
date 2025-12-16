@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -8,56 +8,10 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
+import { Step1Welcome } from "./steps/Step1Welcome";
 import { Step2SportSelect } from "./steps/Step2SportSelect";
 import { Step3RefineSearch } from "./steps/Step3RefineSearch";
-
-const steps = [
-  "Welcome Aboard",
-  "Select Sports",
-  "Refine Search",
-  "Get Matches!",
-];
-
-const Step1Welcome = ({ onNext }: { onNext: () => void }) => {
-  return (
-    <Box sx={{ p: 3, textAlign: "center" }}>
-      <Typography variant="h3" component="h1" gutterBottom color="primary">
-        Welcome to MatchFinder!
-      </Typography>
-      <Typography variant="h6" color="text.secondary" sx={{ mb: 2 }}>
-        Your personalized guide to the day's best sports action.
-      </Typography>
-
-      <Divider sx={{ my: 3 }} />
-
-      <Typography variant="body1" sx={{ mb: 4, px: { xs: 1, md: 8 } }}>
-        Tired of endless scrolling to find out what's on? We get it. MatchFinder
-        cuts through the noise. Simply tell us which sports and leagues you care
-        about, and our system will instantly fetch **only the most relevant
-        games happening today**. No more searching, just watching. Let's find
-        your perfect match!
-      </Typography>
-
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        onClick={onNext}
-        endIcon={<SportsSoccerIcon />}
-        sx={{
-          mt: 2,
-          py: 1.5,
-          fontSize: "1.1rem",
-          borderRadius: 8,
-        }}
-      >
-        Let's Get Started!
-      </Button>
-    </Box>
-  );
-};
+import { steps } from "../utils/data/constants";
 
 const Step4Results = () => <Box sx={{ p: 3 }}>Step 4 Content Placeholder</Box>;
 

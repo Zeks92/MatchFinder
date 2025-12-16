@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import ThemeRegistry from "./ThemeRegistry";
 
 export const metadata: Metadata = {
-  title: "MatchFinder - Pronađite savršenu utakmicu",
-  description: "Personalizovani sportski raspored utakmica za ljubitelje sporta.",
+  title: "MatchFinder - Find your perfect match",
+  description: "A personalized sports match schedule for sports enthusiasts.",
 };
 
 export default function RootLayout({
