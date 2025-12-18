@@ -28,9 +28,6 @@ const Footer = () => {
           {' MatchFinder. All Rights Reserved. Developed by Zeks.'}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
-          <Link href="https://github.com/Zeks92" color="inherit" sx={{ mx: 1 }}>
-            <GitHubIcon />
-          </Link>
           <Link href="https://www.linkedin.com/in/zeljko-lazovic/" color="inherit" sx={{ mx: 1 }}>
             <LinkedInIcon />
           </Link>

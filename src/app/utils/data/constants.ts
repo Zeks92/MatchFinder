@@ -3,10 +3,8 @@ import { SportOption, MatchFinderState } from "@/app/models/models";
 export const MAX_SELECTIONS = 5; 
 export const AGGREGATION_THRESHOLD = 3; 
 export const initialSportOptions: SportOption[] = [
-  { id: '1', name: 'Football', endpoint: 'soccer' },
-  { id: '2', name: 'Basketball', endpoint: 'basketball' },
-  { id: '3', name: 'Tennis', endpoint: 'tennis' }, 
-  { id: '4', name: 'Ice Hockey', endpoint: 'icehockey' },
+  { id: '1', name: 'Football', endpoint: 'soccer', version: 'v4', file: 'schedules.json' },
+  { id: '2', name: 'Basketball', endpoint: 'basketball', version: 'v2', file: 'summaries.json'},
 ];
 
 export const initialState: MatchFinderState = {

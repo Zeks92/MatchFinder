@@ -19,6 +19,8 @@ export interface SportOption {
   id: string;
   name: string;
   endpoint: string;
+  version: string;
+  file: string;
 }
 export interface MatchFinderState {
   selectedSports: SportOption[];

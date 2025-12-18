@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚽ MatchFinder 🏀
 
-## Getting Started
+MatchFinder is a modern, real-time sports scheduling application that helps users find upcoming matches for their favorite sports. Built with **Next.js 15**, it provides a seamless 4-step wizard experience to filter matches by sport, country, and competition.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Live Demo
+**Check out the live app here:** [Link will be added after deployment]
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* **4-Step Wizard Workflow:** Intuitive navigation from sport selection to final match results.
+* **Real-time Data:** Fetches live schedules from Sportradar API.
+* **Smart Cascading Filters:** Selecting a country automatically narrows down available leagues, preventing "No Results" scenarios.
+* **Timezone Aware:** Automatically filters out finished matches and adjusts start times to the user's local timezone.
+* **Responsive UI:** Fully optimized for desktop and mobile using **Material UI (MUI)**.
+* **Performance Optimized:** Implements server-side API routing and smart caching to stay within API rate limits.
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+* **Framework:** Next.js 15 (App Router)
+* **Language:** TypeScript
+* **UI Library:** Material UI (MUI)
+* **State Management:** React Context API + useReducer
+* **API Client:** Axios
+* **Data Source:** Sportradar API (Soccer v4 & Basketball v2)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ⚙️ Installation & Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/your-username/matchfinder.git](https://github.com/your-username/matchfinder.git)
+    cd matchfinder
+    ```
 
-## Deploy on Vercel
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3.  **Set up environment variables:**
+    Create a `.env.local` file in the root directory and add your Sportradar API key:
+    ```env
+    SPORTRADAR_API_KEY=your_actual_api_key_here
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+    Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## 🧠 Technical Highlights
+
+### Smart Filtering Logic
+The app uses a **Top-Down Cascading Filter** on Step 3. When a user selects a category (Country), the system performs a lookup in the global match state to dynamically update available competitions (Leagues). If a selected league no longer matches the selected countries, it is automatically cleared to maintain data integrity.
+
+### API Route Handling
+The backend (`/api/schedule`) is designed to handle different Sportradar versions (Soccer v4 schedules vs. Basketball v2 summaries) through a unified configuration model, ensuring the frontend always receives a consistent data structure.
