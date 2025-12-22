@@ -71,37 +71,74 @@ export const Step3RefineSearch: React.FC<Step3RefineSearchProps> = ({
   };
 
   const renderAggregatedTags = useCallback(
-    (tagValue: string[], getTagProps: (options: { index: number }) => any) => {
-      const totalSelected = tagValue.length;
-      if (totalSelected === 0) return null;
-      
-      if (totalSelected <= AGGREGATION_THRESHOLD) {
-        return tagValue.map((option, index) => (
-          <Chip variant="outlined" label={option} {...getTagProps({ index })} key={option} size="small" />
-        ));
-      }
+  (tagValue: string[], getTagProps: (options: { index: number }) => any) => {
+    const totalSelected = tagValue.length;
+    if (totalSelected === 0) return null;
 
-      const aggregatedCount = totalSelected - AGGREGATION_THRESHOLD;
-      const remainingOptions = tagValue.slice(AGGREGATION_THRESHOLD);
+    if (totalSelected <= AGGREGATION_THRESHOLD) {
+      return tagValue.map((option, index) => {
+        const { key, ...tagProps } = getTagProps({ index });
+        return (
+          <Chip
+            key={key}
+            variant="outlined"
+            label={option}
+            {...tagProps}
+            size="small"
+          />
+        );
+      });
+    }
 
-      return [
-        ...tagValue.slice(0, AGGREGATION_THRESHOLD).map((option, index) => (
-          <Chip variant="outlined" label={option} {...getTagProps({ index })} key={option} size="small" />
-        )),
-        <Tooltip key="more-chip" title={
+    const visibleTags = tagValue.slice(0, AGGREGATION_THRESHOLD).map((option, index) => {
+      const { key, ...tagProps } = getTagProps({ index });
+      return (
+        <Chip
+          key={key}
+          variant="outlined"
+          label={option}
+          {...tagProps}
+          size="small"
+        />
+      );
+    });
+
+    const aggregatedCount = totalSelected - AGGREGATION_THRESHOLD;
+    const remainingOptions = tagValue.slice(AGGREGATION_THRESHOLD);
+    const { key: moreKey, ...moreTagProps } = getTagProps({ index: AGGREGATION_THRESHOLD });
+
+    const moreChip = (
+      <Tooltip
+        key="more-chip-tooltip"
+        title={
           <Box sx={{ p: 1 }}>
-            <Typography variant="subtitle2" sx={{ mb: 1 }}>{aggregatedCount} More:</Typography>
+            <Typography variant="subtitle2" sx={{ mb: 1 }}>
+              {aggregatedCount} More Selected:
+            </Typography>
             {remainingOptions.map((name, idx) => (
-              <Typography key={idx} variant="body2" sx={{ my: 0.5 }}>- {name}</Typography>
+              <Typography key={idx} variant="body2" sx={{ my: 0.5 }}>
+                - {name}
+              </Typography>
             ))}
           </Box>
-        } placement="top">
-          <Chip variant="filled" label={`+${aggregatedCount} More`} {...getTagProps({ index: AGGREGATION_THRESHOLD })} size="small" color="info" />
-        </Tooltip>
-      ];
-    },
-    [AGGREGATION_THRESHOLD]
-  );
+        }
+        placement="top"
+      >
+        <Chip
+          key={moreKey}
+          variant="filled"
+          label={`+${aggregatedCount} More`}
+          {...moreTagProps}
+          size="small"
+          color="info"
+        />
+      </Tooltip>
+    );
+
+    return [...visibleTags, moreChip];
+  },
+  [AGGREGATION_THRESHOLD]
+);
 
   if (isLoading) {
     return (
