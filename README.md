@@ -5,7 +5,7 @@ MatchFinder is a modern, real-time sports scheduling application that helps user
 
 
 ## 🚀 Live Demo
-**Check out the live app here:** [Link will be added after deployment]
+**Check out the live app here:** https://promatchfinder.vercel.app/
 
 ## ✨ Features
 
